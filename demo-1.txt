@@ -73,3 +73,4 @@ function woo_change_order_received_text( $thankyou_text, $order ) {
 //return sprintf( __("%s Transaction successful. Reference Number: ", "woocommerce"),$thankyou_text);
  return __( sprintf( "Thank you. Your order has been received. Transaction successful. Reference Number: %s", $order->get_transaction_id() ) , 'woocommerce',$thankyou_text);
 }
+Testing....
