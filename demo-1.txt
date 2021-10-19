@@ -1,0 +1,75 @@
+.wpml-ls-statics-shortcode_actions.wpml-ls {
+    display: inline-block;
+    padding: 0px;
+    border: 0px;
+}
+li.wpml-ls-slot-shortcode_actions.wpml-ls-first-item {
+    border-right: 1px solid #6f2b8f;
+}
+@media handheld, only screen and (max-width: 780px){
+.mk-header-right {
+    display: block !important;
+}
+.mk-header-social.header-section {
+    display: none !important;
+}
+}
+
+
+<?php do_action('wpml_add_language_selector'); ?>
+<?php do_action('wpml_add_language_selector'); ?>
+
+
+<p class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received">
+
+<?php echo apply_filters( 'woocommerce_thankyou_order_received_text', esc_html__( 'Thank you. Your order has been received.', 'woocommerce' ), $order );?>
+
+</p>
+
+add_filter('woocommerce_thankyou_order_received_text', 'woo_change_order_received_text', 20, 2 );
+function woo_change_order_received_text( $thankyou_text, $order ) {
+    $order_saving = (float)( get_option( 'wc-custom-percent' ) * $order->get_total() / 100 ); // Bonus amount
+    $bonus_link   = '#';
+
+    return sprintf( __("%s You participate in the bonus program, your bonus interest from this order is %s. %s", "woocommerce"),
+    $thankyou_text,
+    wc_price($order_saving),
+    '<a href="'.$bonus_link.'">' . __("Learn more about the bonus program.", "woocommerce") . '</a>' );
+}
+
+
+add_filter('woocommerce_thankyou_order_received_text', 'woo_change_order_received_text', 20, 2 );
+function woo_change_order_received_text( $thankyou_text, $order ) {
+return sprintf( __("%s Reference Number: ", "woocommerce"),$thankyou_text);
+}
+--------------
+
+add_filter('woocommerce_thankyou_order_received_text', 'woo_change_order_received_text', 20, 2 );
+        function woo_change_order_received_text( $thankyou_text, $order ) {
+        //return sprintf( __("%s Transaction successful. Reference Number: ", "woocommerce"),$thankyou_text);
+        return __( sprintf( "Transaction successful. Reference Number: %s", $transaction_id ) , 'woocommerce',$thankyou_text);
+        }
+
+-------------
+add_filter( 'woocommerce_thankyou_order_received_text', 'wpb_thankyou', 10, 2 );
+
+function wpb_thankyou( $thankyoutext, $order ) {
+	$added_text = $thankyoutext . '<p>You can access the PDF Download from the</p>';
+	return $added_text ;
+}
+-----------
+
+apply_filters( 'woocommerce_thankyou_order_received_text', esc_html__( '%s Transaction successful. Reference Number:', 'woocommerce' ), $order, 20, 2 );
+
+
+add_filter('woocommerce_thankyou_order_received_text', 'woo_change_order_received_text', 20, 2 );
+        function woo_change_order_received_text( $thankyou_text, $order ) {
+        //return sprintf( __("%s Transaction successful. Reference Number: ", "woocommerce"),$thankyou_text);
+        return __( sprintf( "Transaction successful. Reference Number: %s", $transaction_id ) , 'woocommerce',$thankyou_text);
+        }
+----------
+add_filter('woocommerce_thankyou_order_received_text', 'woo_change_order_received_text', 20, 2 );
+function woo_change_order_received_text( $thankyou_text, $order ) {
+//return sprintf( __("%s Transaction successful. Reference Number: ", "woocommerce"),$thankyou_text);
+ return __( sprintf( "Thank you. Your order has been received. Transaction successful. Reference Number: %s", $order->get_transaction_id() ) , 'woocommerce',$thankyou_text);
+}
